@@ -1,5 +1,6 @@
 package tp3.ejercicio1;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import tp1.ejercicio8.Queue;
@@ -108,49 +109,82 @@ public class GeneralTree<T>{
 	  }
 
 	public int ancho(){
-            int ancho = -1;
+            int anchoMax = -1;
             if (!this.isEmpty()){
-                ancho = buscar (this, -1);
+                Queue<GeneralTree<T>> cola = new Queue<GeneralTree<T>>();
+                cola.enQueue(this);
+                cola.enQueue(null);
+                int ancho = 0;
+                GeneralTree<T> aux;
+                while (!cola.isEmpty()){
+                    aux = cola.deQueue();
+                    if (aux != null){
+                        ancho++;
+                        for (GeneralTree<T> children : aux.getChildren())
+                            cola.enQueue(children);
+                    } else {
+                        if (ancho > anchoMax)
+                                anchoMax = ancho;
+                        if (!cola.isEmpty()){
+                            ancho = 0;
+                            cola.enQueue(null);
+                        }
+                    }
+                }
             }
-            return ancho;
+            return anchoMax;
 	}
         
-        private int buscar (GeneralTree<T> arbol, int ancho){
-            int anchoMax = ancho;
-            if (arbol.getChildren().size() > anchoMax){
-                anchoMax = arbol.getChildren().size();
+    public boolean esAncestro (T a, T b){
+        boolean es = false;
+        if (!this.isEmpty()){
+            GeneralTree<T> aNodo = new GeneralTree<T>();
+            GeneralTree<T> bNodo = new GeneralTree<T>();
+            boolean primeroB = false;
+            Queue<GeneralTree<T>> cola = new Queue<GeneralTree<T>>();
+            cola.enQueue(this);
+            GeneralTree<T> aux;
+            while ((!cola.isEmpty()) && ((!primeroB) || (bNodo != null))){
+                aux = cola.deQueue();
+                if (aux.getData().equals(a))
+                    aNodo = aux;
+                else{
+                    if (aux.getData().equals(b)){
+                        if (aNodo == null)
+                            primeroB = true;
+                        else 
+                            bNodo = aux;
+                    }
+                }
+                List<GeneralTree<T>> children = aux.getChildren();
+                Iterator<GeneralTree<T>> it = children.iterator();
+                while ((it.hasNext()) && (!primeroB) && (bNodo == null)){
+                    GeneralTree<T> child = it.next();
+                    cola.enQueue(child);
+                }
             }
-            for (GeneralTree<T> children : arbol.getChildren())
-                anchoMax = buscar (children, anchoMax);
-            return anchoMax;
+            if ((aNodo != null) && (bNodo != null) && (!primeroB)){
+                System.out.println("Encontre A? " + aNodo != null);
+                System.out.println("Encontre B? " + bNodo != null);
+                System.out.println("Encontre primero a B? " + primeroB);
+                es = chequear (aNodo, b);    
+            }
         }
-        
-        public static void main (String []args){
-           // TODO code application logic here
-        GeneralTree <Integer> HII = new GeneralTree <Integer> (8);
-        GeneralTree <Integer> HID = new GeneralTree <Integer> (23);
-        GeneralTree <Integer> HI = new GeneralTree <Integer> (16);
-        HI.addChild(HII);
-        HI.addChild(HID);
+        return es;
+    }
     
-        GeneralTree <Integer> HMI = new GeneralTree <Integer> (9);
-        GeneralTree <Integer> HM = new GeneralTree <Integer> (7);
-        HM.addChild(HMI);
-        
-        GeneralTree <Integer> HDI = new GeneralTree <Integer> (1);
-        GeneralTree <Integer> HDD = new GeneralTree <Integer> (3);
-        GeneralTree <Integer> HD = new GeneralTree <Integer> (17);
-        HD.addChild(HDI);
-        HD.addChild(HDD);
-        
-        GeneralTree <Integer> arbol = new GeneralTree <Integer> (15);
-        arbol.addChild(HI);
-        arbol.addChild(HM);
-        arbol.addChild(HD);
-        
-            System.out.println("La altura del arbol es: " + arbol.altura());
-            System.out.println("El nivel del 7 es: " + arbol.nivel(7));
-            System.out.println("El ancho maximo es: " + arbol.ancho());
-
+    private boolean chequear (GeneralTree<T> arbol, T b){
+        boolean encontre = false;
+        if (arbol.getData() == b)
+            encontre = true;
+        else {
+            List<GeneralTree<T>> children = arbol.getChildren();
+            Iterator <GeneralTree<T>> it = children.iterator();
+            while ((it.hasNext()) && (!encontre)){
+                GeneralTree<T> child = it.next();
+                encontre = chequear (child, b);
+            }
+        }
+        return encontre;
     }
 }
