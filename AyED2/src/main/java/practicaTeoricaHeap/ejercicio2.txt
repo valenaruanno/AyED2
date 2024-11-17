@@ -1,0 +1,15 @@
+Ejercicio 2
+a) ¿Cuántos elementos hay, al menos, en una heap de altura h?
+b) ¿Dónde se encuentra ubicado el elemento mínimo en una max-heap?
+c) ¿El siguiente arreglo es una max-heap : [23, 17, 14, 6, 13, 10, 1, 5, 7, 12] ?
+
+a- En una heap de altura h hay al menos 2^h elementos.
+b- el elemento minimo de una max heap se encuentra ubicado en uno de los nodos hoja.
+c- 
+                                23
+                17                              14
+        6               13              10              1
+    5       7       12
+
+    No es una max heap debido a que el elemento 6 no es mayor o igual que todos sus hijos.
+    

@@ -1,0 +1,26 @@
+Ejercicio 4
+Dibuje todas las min-heaps posibles para este conjunto de claves: {A, B, C, D, E} 
+
+Opcion 1: 
+                    A
+            B               C
+        D       E 
+
+Opcion 2: 
+                    A
+            B               C
+        E       D
+
+Opcion 3: 
+                    A
+            C               B
+        D       E 
+
+Opcion 4: 
+                    A
+            C               B
+        D       E 
+        Opcion 2: 
+                    A
+            C               B
+        E       D 

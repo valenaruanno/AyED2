@@ -1,0 +1,16 @@
+Ejercicio 22
+Luego de insertar la clave 15 en la siguiente min-heap, ¿cuántas de las claves que ya estaban en la heap
+han mantenido su lugar (es decir, ocupan en la min-heap resultante la misma posición que ocupaban
+antes de la inserción)?
+a) Ninguna
+b) Seis
+c) Ocho
+d) Nueve
+
+
+                                                1
+                                2                                   3
+                        17              15                  36              7
+                    25      100     19
+                
+            Res = opcion (c)

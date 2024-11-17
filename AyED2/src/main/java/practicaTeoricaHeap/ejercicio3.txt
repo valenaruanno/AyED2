@@ -1,0 +1,12 @@
+Ejercicio 3
+Dados los siguientes árboles, indique si representan una heap. Justifique su respuesta.
+
+        Arbol 1                                             Arbol 2
+            1                                                  4
+    3               7                                   2               7
+                8       9                           1       3       6       9
+
+    Rta = El arbol 1 no representa una heap por que no cumple con la propiedad estructural,
+        es decir, debe ser un arbol completo de altura h-1 y el ultimo nivel se completa de 
+        izquierda a derecha. El arbol 2 tampoco es una heap ya que no cumple con una propiedad 
+        de orden, es decir, no es una min-heap ni una max-heap. 
